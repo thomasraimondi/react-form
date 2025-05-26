@@ -77,6 +77,16 @@ function App() {
     });
   };
 
+  const handleDeleteItem = (index) => {
+    console.log(index);
+
+    const filteredItem = products.filter((product, i) => i != index);
+    console.log(filteredItem);
+    setProducts(filteredItem);
+  };
+
+  console.log(products);
+
   return (
     <div className="container">
       <div className="header d-flex justify-content-between p-3">
@@ -129,11 +139,19 @@ function App() {
         )}
 
         <div className="row row-gap-3">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div className="col-4" key={product.id}>
               <div className="card">
-                <div className="card-header">
-                  #{product.id} - {product.title}
+                <div className="card-header d-flex justify-content-between">
+                  <div className="title">
+                    #{product.id} - {product.title}
+                  </div>
+                  <button
+                    onClick={() => handleDeleteItem(index)}
+                    className="btn btn-danger"
+                  >
+                    x
+                  </button>
                 </div>
                 <div className="card-body">{product.description}</div>
               </div>
