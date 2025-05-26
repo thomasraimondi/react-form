@@ -1,23 +1,80 @@
 import { useState } from "react";
-import products from "./data/products";
 
 function App() {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [submitForm, setSubmitForm] = useState();
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      title: "Product 1",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 2,
+      title: "Product 2",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 3,
+      title: "Product 3",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 4,
+      title: "Product 4",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 5,
+      title: "Product 5",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 6,
+      title: "Product 6",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 7,
+      title: "Product 7",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 8,
+      title: "Product 8",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 9,
+      title: "Product 9",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+    {
+      id: 10,
+      title: "Product 10",
+      description: "lorem lorem lorem lorem lorem lorem lorem",
+    },
+  ]);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
 
   const handleFormVisible = () => setIsFormVisible(!isFormVisible);
+  const handleFieldChange = (e) => {
+    const newData = { ...formData, [e.target.name]: e.target.value };
+    setFormData(newData);
+  };
   const handleSubmitform = (e) => {
     e.preventDefault();
     console.log(e);
-  };
-  const handleFieldChange = (e) => {
-    const newData = { ...formData };
-    newData[e.target.name] = e.target.value;
-    setFormData(newData);
+    const newProducts = [...products, formData];
+    console.log(newProducts);
+    setProducts(newProducts);
+
+    setFormData({
+      title: "",
+      description: "",
+    });
   };
 
   return (
@@ -28,14 +85,17 @@ function App() {
         </div>
         <div className="function">
           <button className="btn btn-primary" onClick={handleFormVisible}>
-            add
+            {isFormVisible ? "x" : "+"}
           </button>
         </div>
       </div>
       <div className="main">
         {isFormVisible ? (
           <div className="col-4">
-            <form className="form-control my-4 d-flex flex-column gap-3">
+            <form
+              onSubmit={handleSubmitform}
+              className="form-control my-4 d-flex flex-column gap-3"
+            >
               <div className="field-1">
                 <label className="col-3  me-3" htmlFor="title">
                   Titolo:
@@ -61,9 +121,7 @@ function App() {
                   id="description"
                 />
               </div>
-              <button onClick={handleSubmitform} className="btn btn-primary">
-                Add
-              </button>
+              <button className="btn btn-primary">Add</button>
             </form>
           </div>
         ) : (
