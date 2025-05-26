@@ -4,11 +4,20 @@ import products from "./data/products";
 function App() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [submitForm, setSubmitForm] = useState();
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  });
 
   const handleFormVisible = () => setIsFormVisible(!isFormVisible);
   const handleSubmitform = (e) => {
     e.preventDefault();
-    console.log("form inviato");
+    console.log(e);
+  };
+  const handleFieldChange = (e) => {
+    const newData = { ...formData };
+    newData[e.target.name] = e.target.value;
+    setFormData(newData);
   };
 
   return (
@@ -31,13 +40,26 @@ function App() {
                 <label className="col-3  me-3" htmlFor="title">
                   Titolo:
                 </label>
-                <input className="grow-1" type="text" name="title" id="title" />
+                <input
+                  value={formData.title}
+                  onChange={handleFieldChange}
+                  className="grow-1"
+                  type="text"
+                  name="title"
+                  id="title"
+                />
               </div>
               <div className="field-2">
                 <label className="col-3 me-3" htmlFor="description">
                   Descrizione
                 </label>
-                <input type="text" name="description" id="description" />
+                <input
+                  value={formData.description}
+                  onChange={handleFieldChange}
+                  type="text"
+                  name="description"
+                  id="description"
+                />
               </div>
               <button onClick={handleSubmitform} className="btn btn-primary">
                 Add
